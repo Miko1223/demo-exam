@@ -35,8 +35,11 @@ Sh /etc/iptables.sh
 Log syslog informational
 Router ospf
 ospf router-id <ip-адрес интерфейса внутренней сети маршрутизатора или другое любое число>
+
 network <Внутренняя сеть>/<Маска этой сети> area 0.0.0.0
+
 network <Внешняя сеть>/<Маска этой сети> area 0.0.0.0
+
 Перезапустить сервис frr (systemctl restart frr)
 
 vtysh -c 'show ip ospf neighbor' – проверка
@@ -47,16 +50,24 @@ File:
 Inetrfacesv4=”enp0s8”
 
 2.	Nano /etc/dhcp/dhcpd.conf
+3.	
 Option domain-name “hq.work”;
+
 Option domain-name-servers 12.10.10.2,8.8.8.8
 
 Subnet 12.10.10.0 netmask 255.255.255.192 {
+
 Range 12.10.10.2 12.10.10.62;
+
 Option routers 12.10.10.1;
+
 }
 Host HQ-SRV { 
+
 Hardware ethernet MAC-ADDRESS;
+
 Fixed-address 12.10.10.2;
+
 }
 -------------------------------------------------------------
 На машине HQ-R: iperf -s
